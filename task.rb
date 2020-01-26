@@ -162,16 +162,34 @@ end
 
 class UserQ17
   # 以下に回答を記載
-  attr_accessor :name, :age, :gender, :admin
-  def initialize(name:, age:, gender:, admin:)
-    @name,@age,@gender,@admin = name,age,gender,admin
+  # 変更前
+  # attr_accessor :name, :age, :gender, :admin
+  # def initialize(name:, age:, gender:, admin:)
+  #   @name,@age,@gender,@admin = name,age,gender,admin
+  # end
+  # ↓変更後（アクセサメソッドの削除、オプション引数へ変更）
+  def initialize(**params)
+    @name = params[:name]
+    @age = params[:age]
+    @gender = params[:gender]
+    @admin = params[:admin]
   end
 
+  # 変更前
+  # def info
+  #   puts "名前：#{@name}"
+  #   puts "年齢：#{@age}"
+  #   puts "性別：#{@gender}"
+  #   puts "管理者権限：#{@admin ? "有り" : "無し"}"
+  # end
+  # ↓変更後（ヒアドキュメントへ変更）
   def info
-    puts "名前：#{@name}"
-    puts "年齢：#{@age}"
-    puts "性別：#{@gender}"
-    puts "管理者権限：#{@admin ? "有り" : "無し"}"
+    puts <<~EOS
+      名前：#{@name}
+      年齢：#{@age}
+      性別：#{@gender}
+      管理者権限：#{@admin ? "有り" : "無し"}
+    EOS
   end
 end
 
@@ -187,16 +205,25 @@ end
 
 class UserQ18
   # 以下に回答を記載
-  attr_accessor :name, :age
+  # 消去　attr_accessor :name, :age
   def initialize(name:, age:)
     @name,@age = name,age
   end
 
+  #変更前
+  # def introduce
+  #   if @age >= 20
+  #     puts "こんにちは、#{@name}と申します。宜しくお願いいたします。"
+  #   else
+  #     puts "はいさいまいど〜、#{@name}です！！！"
+  #   end
+  # end
+  # 変更後（if文の戻り値からputsを消去）
   def introduce
     if @age >= 20
-      puts "こんにちは、#{@name}と申します。宜しくお願いいたします。"
+      "こんにちは、#{@name}と申します。宜しくお願いいたします。"
     else
-      puts "はいさいまいど〜、#{@name}です！！！"
+      "はいさいまいど〜、#{@name}です！！！"
     end
   end
 end
